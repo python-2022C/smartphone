@@ -24,6 +24,7 @@ from smartphone_app.views import (
     get_products_by_company,
     get_products_by_color,
     get_products_by_memory_range,
+    get_products_by_RAM
     )
 
 urlpatterns = [
@@ -37,8 +38,6 @@ urlpatterns = [
     path('products/color/<str:color>', get_products_by_color),
     path('products/<str:memory>', get_products_by_memory_range),
     path('products_RAM/<str:RAM>', get_products_by_RAM),
-]
-    path('products/RAM/<str:RAM>', get_products_by_RAM),
     path('products/company/<str:company>', get_products_by_company),
     path('products/memory/<str:memory>', get_products_by_memory_range)
 ]
