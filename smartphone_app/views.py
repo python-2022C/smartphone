@@ -141,3 +141,12 @@ def get_products_by_company(request, company):
             products_json.append(convert_to_json(product))
 
     return JsonResponse({'products': products_json})
+
+def get_products_color(request,color):
+    if request.method == 'GET':
+        products = Product.objects.filter(color=color)
+        products_json = []
+        for product in products:
+            products_json.append(convert_to_json(product))
+    
+    return JsonResponse({'products': products_json})
