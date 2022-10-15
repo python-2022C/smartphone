@@ -150,13 +150,28 @@ def get_products_by_memory_range(request, memory):
         request: the request object
         min_memory: the min memory of the product
         max_memory: the max memory of the product
+    """
+    if request.method == 'GET':
+        products = Product.objects.filter(memory=memory)
+        for product in products:
+                products_json.append(convert_to_json(product))
+            
+    return JsonResponse({'products': products_json})
+
+def get_products_by_RAM(request, RAM):
+    """
+    Get all products by company
+    args:
+        request: the request object
+        company: the company of the product
     return:
         JsonResponse: the list of products
     """
     if request.method == 'GET':
-        products = Product.objects.filter(memory=memory)
+        products = Product.objects.filter(RAM=RAM)
         products_json = []
         for product in products:
             products_json.append(convert_to_json(product))
-
+            
     return JsonResponse({'products': products_json})
+
