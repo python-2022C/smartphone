@@ -33,7 +33,6 @@ urlpatterns = [
     path('add_product/', add_product),
     path('update_product/<int:id>', update_product),
     path('delete_product/<int:id>', delete_product),
-    path('products/<str:company>', get_products_by_company),
-    path('products/<str:memory>',
-         get_products_by_memory_range),
+    path('products/company/<str:company>', get_products_by_company),
+    path('products/memory/<str:memory>', get_products_by_memory_range),
 ]
