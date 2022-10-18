@@ -1,5 +1,5 @@
 from itertools import product
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Product
 
 # Define the function convert_to_json
@@ -37,11 +37,36 @@ def get_products(request):
         JsonResponse: the list of products
     """
     products = Product.objects.all()
-    products_json = []
+    # products_json = []
+    # for product in products:
+    #     products_json.append(convert_to_json(product))
+    html_data = '''<table style="border-collapse: collapse;">
+                        <tr>
+                            <th style="border: 1px solid  black;padding: 10px;">id</th>
+                            <th style="border: 1px solid  black;padding: 10px;">name</th>
+                            <th style="border: 1px solid  black;padding: 10px;">company</th>
+                            <th style="border: 1px solid  black;padding: 10px;">color</th>
+                            <th style="border: 1px solid  black;padding: 10px;">RAM</th>
+                            <th style="border: 1px solid  black;padding: 10px;">memory</th>
+                            <th style="border: 1px solid  black;padding: 10px;">price</th>
+                            <th style="border: 1px solid  black;padding: 10px;">Image URL</th>
+                        </tr>
+                   '''
     for product in products:
-        products_json.append(convert_to_json(product))
-
-    return JsonResponse({'products': products_json})
+        table_row = f'''<tr">
+                            <td style="border: 1px solid  black;padding: 10px;">{product.id}</td>
+                            <td style="border: 1px solid  black;padding: 10px;">{product.name}</td>
+                            <td style="border: 1px solid  black;padding: 10px;">{product.company}</td>
+                            <td style="border: 1px solid  black;padding: 10px;">{product.color}</td>
+                            <td style="border: 1px solid  black;padding: 10px;">{product.RAM}</td>
+                            <td style="border: 1px solid  black;padding: 10px;">{product.memory}</td>
+                            <td style="border: 1px solid  black;padding: 10px;">{product.price} $</td>
+                            <td style="border: 1px solid  black;padding: 10px;"><a href="{product.img_url}">{product.name}</a></td>
+                        </tr>'''
+        html_data += table_row
+    html_data += '</table>' 
+    return HttpResponse(html_data)
+    # return JsonResponse({'products': products_json})
 
 
 def get_product(request, id):
@@ -136,7 +161,7 @@ def get_products_by_company(request, company):
         JsonResponse: the list of products
     """
     if request.method == 'GET':
-        products = Product.objects.filter(company=company)
+        products = Product.objects.filter(company__icontains=company)
         products_json = []
         for product in products:
             products_json.append(convert_to_json(product))
@@ -165,9 +190,32 @@ def get_products_by_RAM(request, RAM):
     args:
         request: the request object
         RAM: the RAM of the product
+    """
     if request.method == 'GET':
         products = Product.objects.filter(color=color)
         products_json = []
         for product in products:
             products_json.append(convert_to_json(product))
+    return JsonResponse({'products': products_json})
+
+
+def get_products_by_multiple_companies(request):
+    """
+    Get all products by multiple companies
+    args:
+        request: the request object
+        companies: the companies of the product
+    return:
+        JsonResponse: the list of products
+    """
+
+    products_json = []
+    if request.method == 'GET':
+        # Get companies from the request query string
+        companies = request.GET.getlist('companies')
+        print(companies)
+        products = Product.objects.filter(company__in=companies)
+        for product in products:
+            products_json.append(convert_to_json(product))
+
     return JsonResponse({'products': products_json})
