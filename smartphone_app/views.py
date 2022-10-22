@@ -1,6 +1,7 @@
 from itertools import product
 from django.http import JsonResponse, HttpResponse
 from .models import Product
+from django.shortcuts import render
 
 # Define the function convert_to_json
 
@@ -27,7 +28,21 @@ def convert_to_json(product):
     }
     return product_json
 
-
+def get_company(request):
+    """
+    Get all companies
+    args:
+        request: the request object
+    return:
+        JsonResponse: the list of companies
+    """
+    companies = Product.objects.all()
+    context = {
+        'companies': companies,
+        'title': 'Companies',
+    }
+    return render(request, 'home.html', context)
+    
 def get_products(request):
     """
     Get all products
