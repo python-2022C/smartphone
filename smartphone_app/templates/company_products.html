@@ -8,10 +8,19 @@
 </head>
 <body>
     <h1> List of products</h1>
-    <ul>
-    {% for product in products %}
-        <li>{{product}}</li>
-    {% endfor %}
-    </ul>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+         
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+           
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
