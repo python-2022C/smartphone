@@ -38,7 +38,7 @@ def get_company(request):
     """
     companies = Product.objects.all()
     context = {
-        'company': companies,
+        'companies': companies,
         'title': 'Companies',
     }
     return render(request, 'home.html', context)
