@@ -404,3 +404,18 @@ def get_products_by_date_range(request, min_date, max_date):
 
     return JsonResponse({'products': []})
 ```
+### 12. Find the product by multiple companies
+
+```python
+def get_products_by_multiple_companies(request, companies):
+    """
+    Get all products by multiple companies
+    args:
+        request: the request object
+        companies: the companies of the product
+    return:
+        JsonResponse: the list of products
+    """
+
+    return JsonResponse({'products': []})
+```
