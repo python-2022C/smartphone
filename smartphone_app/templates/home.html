@@ -9,7 +9,7 @@
 <body>
     <ul>
     {% for company in companies %}
-        <li>{{company}}</li>
+        <li><a href="localhost:8000/company/{{company}}">{{company}}</a></li>
     {% endfor %}
     </ul>
 

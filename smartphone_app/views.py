@@ -28,7 +28,7 @@ def convert_to_json(product):
     }
     return product_json
 
-def get_company(request):
+def get_all_company(request):
     """
     Get all companies
     args:
