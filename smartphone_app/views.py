@@ -37,6 +37,8 @@ def get_company(request):
         JsonResponse: the list of companies
     """
     companies = Product.objects.all()
+    # Get unique companies
+    companies = set([company.company for company in companies])
     context = {
         'companies': companies,
         'title': 'Companies',
