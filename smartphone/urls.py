@@ -27,7 +27,8 @@ from smartphone_app.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('company/', get_all_company),
-    path('company/<str:company>/', get_company_by_name),
+    path('company/<str:company>/', get_company_by_name, name='company'),
+
 
 
 ]
